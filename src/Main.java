@@ -76,6 +76,15 @@ public class Main {
 
         if(movieCount == 1) {
             result.next();
+            ResultSet movieMatch = searchForMovie(stmt, movieName);
+            movieMatch.next();
+            if(movieMatch.getString(3).substring(0,4).equals(movieYear)) {
+                System.out.println("Movie match found for " + movieName + " which released in " + movieYear);
+            } else {
+                System.out.println("Movie match found for " + movieName + ", however the file claims to be from " +
+                        movieYear + " while the database has it as " + movieMatch.getString(3).substring(0,4));
+            }
+
             System.out.println("One movie found named " + movieName);
         }
 
