@@ -13,13 +13,10 @@ public class Main {
 
         String[] directories = getDirectories("/F:/Movies");
 
-        for (String file : directories) {
+        verifyAllMovies(stmt, directories, "2 Fast 2 Furious (2003)");
 
-            searchForMovie(stmt, file.substring(0, file.length()-7));
-            verifyMovie(stmt, file);
-            System.out.println(file);
-        }
 
+        // Other stuff, pls ignore.
         ResultSet rs = stmt.executeQuery("SELECT * FROM Movies");
 
         rs.next();
@@ -31,6 +28,29 @@ public class Main {
         System.out.println(hi.getInt(1));
 
         System.out.println(hi);
+
+    }
+
+    public static void verifyAllMovies(Statement stmt, String[] directories, String startFile) throws SQLException {
+
+        boolean startFound = false;
+
+        for (String file : directories) {
+
+            if(!startFound) {
+
+                startFound = file.equals(startFile);
+
+            }
+
+            if(startFound) {
+
+                searchForMovie(stmt, file.substring(0, file.length()-7));
+                verifyMovie(stmt, file);
+                System.out.println(file);
+
+            }
+        }
 
     }
 
@@ -79,7 +99,7 @@ public class Main {
             ResultSet movieMatch = searchForMovie(stmt, movieName);
             movieMatch.next();
             if(movieMatch.getString(3).substring(0,4).equals(movieYear)) {
-                System.out.println("Movie match found for " + movieName + " which released in " + movieYear);
+                System.out.println("Perfect match found for " + movieName + " which released in " + movieYear);
             } else {
                 System.out.println("Movie match found for " + movieName + ", however the file claims to be from " +
                         movieYear + " while the database has it as " + movieMatch.getString(3).substring(0,4));
