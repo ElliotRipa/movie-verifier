@@ -6,6 +6,8 @@ public class Main {
 
     public static void main(String[] args) throws SQLException {
 
+        System.out.println(specifyMovieID("FAkeMovie"));
+
         String password = FileReader.readFile("/F:/password.txt").get(0);
 
         Connection con = connect(password);
@@ -45,7 +47,6 @@ public class Main {
 
             if(startFound) {
 
-                searchForMovie(stmt, file.substring(0, file.length()-7));
                 verifyMovie(stmt, file);
                 System.out.println(file);
 
@@ -86,6 +87,7 @@ public class Main {
         String movieName = directoryName.substring(0, directoryName.length()-7);
         String movieYear = directoryName.substring(directoryName.length()-5, directoryName.length()-1);
 
+        // Get the number of movies in the database that match the name in the file.
         int movieCount = getMovieCountByName(stmt, movieName);
 
         ResultSet result = searchForMovie(stmt, movieName);
@@ -117,6 +119,43 @@ public class Main {
 
         return true;
 
+
+    }
+
+    public static int specifyMovieID(String name) {
+        Scanner scanner = new Scanner(System.in);
+        boolean confirmed = false;
+        int id = -1;
+
+        while(!confirmed) {
+
+            System.out.println("What ID does the movie " + name + " have in the database?");
+            while(!scanner.hasNextInt()) {
+
+                System.out.println("Please respond with an int.");
+                System.out.println("What ID does the movie " + name + " have in the database?");
+                scanner.next();
+
+            }
+
+            id = scanner.nextInt();
+
+            // TODO: FIX THIS!!!
+
+            System.out.println("Is the ID for the movie " + name + " " + id + "? (Y/N)");
+
+            // For some godforsaken reason I couldn't inline this. So here's a redundant variable.
+            String response = scanner.nextLine().toUpperCase();
+
+            if(response.equals("Y")) {
+                confirmed = true;
+            } else {
+                scanner.next();
+            }
+
+        }
+
+        return id;
 
     }
 
