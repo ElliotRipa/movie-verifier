@@ -140,17 +140,13 @@ public class Main {
 
             id = scanner.nextInt();
 
-            // TODO: FIX THIS!!!
-
             System.out.println("Is the ID for the movie " + name + " " + id + "? (Y/N)");
 
             // For some godforsaken reason I couldn't inline this. So here's a redundant variable.
-            String response = scanner.nextLine().toUpperCase();
+            String response = scanner.next().toUpperCase();
 
             if(response.equals("Y")) {
                 confirmed = true;
-            } else {
-                scanner.next();
             }
 
         }
