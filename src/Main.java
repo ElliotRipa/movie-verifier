@@ -122,8 +122,24 @@ public class Main {
 
             ResultSet result = searchForMovie(stmt, movieName);
 
+            // If no movie is found matching the directory name.
             if(movieCount == 0) {
                 System.out.println("No movie found with name " + movieName );
+
+                System.out.println("Would you like to change the name of the directory? (Y/N)");
+
+                if(input().equalsIgnoreCase("Y")) {
+                    System.out.println("What would you like to change it to?");
+                    File oldName = new File("/F:/Movies/" + directoryName);
+                    File newName = new File("/F:/Movies/" + input());
+                    if(changeFileName(oldName, newName)) {
+                        System.out.println("Directory name changed to " + newName);
+                    } else {
+                        System.out.println("Failed to rename directory");
+                    }
+
+                }
+
             }
 
             if(movieCount == 1) {
