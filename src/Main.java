@@ -97,7 +97,7 @@ public class Main {
         Pattern moviePattern = Pattern.compile(".+\\([0-9]{4}\\)");
         Matcher matcher = moviePattern.matcher(directoryName);
 
-        if(!matcher.find()) {
+        if(!matcher.matches()) {
             System.out.println("The directory " + directoryName + " does not match the expected naming convention");
             System.out.println("Would you like to rename it? (Y/N)");
 
